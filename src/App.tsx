@@ -49,7 +49,7 @@ function App() {
   const [editingAlert, setEditingAlert] = useState<any>(null);
   const [deleteConfirmData, setDeleteConfirmData] = useState<{ type: 'car' | 'maintenance'; id?: string } | null>(null);
   const [showToast, setShowToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-
+// SErdarseer
   const selectedCar = selectedCarId ? cars.find((c) => c.id === selectedCarId) : null;
   const stats = calculateDashboardStats(cars);
 
