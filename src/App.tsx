@@ -348,7 +348,7 @@ function App() {
       {/* Main Content */}
       <div className="max-w-md mx-auto px-4 py-6">
         {carsLoading ? (
-          <div className="text-center py-12">⏳ {t('saving', lang).replace('...', '')}</div>
+          <div className="text-center py-12 text-gray-900 dark:text-gray-300">⏳ {t('saving', lang).replace('...', '')}</div>
         ) : currentPage === 'home' ? (
           <>
             <Dashboard stats={stats} cars={cars} currency={currency} language={language} onDeleteAlert={handleDeleteAlert} />
@@ -417,7 +417,7 @@ function App() {
             />
           ) : (
             <div className="flex items-center justify-center py-12">
-              <p className="text-gray-600">Araç yükleniyor...</p>
+              <p className="text-gray-600 dark:text-gray-400">Araç yükleniyor...</p>
             </div>
           )
         ) : currentPage === 'alerts' ? (
@@ -425,33 +425,33 @@ function App() {
             <div className="space-y-3 pb-24">
               {/* Uyarı listesi */}
               {(selectedCar.alerts || []).length === 0 ? (
-                <div className="text-center py-16 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+                <div className="text-center py-16 bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
                   <p className="text-5xl mb-3">🔔</p>
-                  <p className="text-gray-600 font-medium">{t('noAlerts', lang)}</p>
+                  <p className="text-gray-600 dark:text-gray-400 font-medium">{t('noAlerts', lang)}</p>
                 </div>
               ) : (
                 (selectedCar.alerts || []).map((alert) => (
                   <div
                     key={alert.id}
                     onClick={() => { setEditingAlert(alert); openModal('alert'); }}
-                    className="bg-yellow-50 border border-yellow-200 border-l-4 border-l-yellow-400 rounded-xl p-4 cursor-pointer hover:bg-yellow-100 transition"
+                    className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 border-l-4 border-l-yellow-400 rounded-xl p-4 cursor-pointer hover:bg-yellow-100 dark:hover:bg-yellow-900/50 transition"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <p className="font-bold text-gray-900">{alert.baslik}</p>
+                        <p className="font-bold text-gray-900 dark:text-white">{alert.baslik}</p>
                         {alert.tip === 'tarih' && alert.bitiseTarihi && (
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                             📅 {new Date(alert.bitiseTarihi).toLocaleDateString('tr-TR')}
                             {alert.oncesindanGun && ` · ${alert.oncesindanGun} gün öncesinde uyar`}
                           </p>
                         )}
                         {alert.tip === 'km' && alert.bitisKm && (
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                             🛣️ {alert.bitisKm.toLocaleString('tr-TR')} KM
                             {alert.oncesindanKm && ` · ${alert.oncesindanKm.toLocaleString('tr-TR')} KM öncesinde uyar`}
                           </p>
                         )}
-                        {alert.not && <p className="text-sm text-gray-500 mt-1 italic">"{alert.not}"</p>}
+                        {alert.not && <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 italic">"{alert.not}"</p>}
                       </div>
                     </div>
                   </div>
@@ -461,7 +461,7 @@ function App() {
               {/* FAB - Uyarı Ekle */}
               <button
                 onClick={() => { setEditingAlert(null); openModal('alert'); }}
-                className="fixed bottom-24 right-6 w-14 h-14 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl transition z-30"
+                className="fixed bottom-24 right-6 w-14 h-14 bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-500 text-white rounded-full shadow-lg dark:shadow-yellow-900/50 flex items-center justify-center text-2xl transition z-30"
                 title={t('addAlert', lang)}
               >
                 +
@@ -469,7 +469,7 @@ function App() {
             </div>
           ) : (
             <div className="flex items-center justify-center py-12">
-              <p className="text-gray-600">Araç yükleniyor...</p>
+              <p className="text-gray-600 dark:text-gray-400">Araç yükleniyor...</p>
             </div>
           )
         ) : currentPage === 'settings' ? (
@@ -544,6 +544,7 @@ function App() {
         onSubmit={handleAddMaintenance}
         onDelete={editingMaintenanceIdx !== null ? () => {
           setDeleteConfirmData({ type: 'maintenance' });
+          closeModal('maintenance');
           openModal('deleteMaintenanceConfirm');
         } : undefined}
       />
@@ -611,8 +612,8 @@ function App() {
       {/* Toast */}
       {showToast && (
         <div
-          className={`fixed bottom-24 left-4 right-4 max-w-sm mx-auto px-4 py-3 rounded-lg text-white font-bold animate-slide-up ${
-            showToast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          className={`fixed bottom-24 left-4 right-4 max-w-sm mx-auto px-4 py-3 rounded-lg text-white font-bold animate-slide-up shadow-lg ${
+            showToast.type === 'success' ? 'bg-green-500 dark:bg-green-600' : 'bg-red-500 dark:bg-red-600'
           }`}
         >
           {showToast.message}
@@ -620,7 +621,7 @@ function App() {
       )}
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 shadow-lg dark:shadow-2xl">
         <div className="max-w-md mx-auto px-4 flex items-center justify-around">
           <button
             onClick={() => {
@@ -629,8 +630,8 @@ function App() {
             }}
             className={`flex-1 py-4 text-center font-bold transition ${
               currentPage === 'home'
-                ? 'text-blue-600 border-t-2 border-blue-600'
-                : 'text-gray-600'
+                ? 'text-blue-600 dark:text-blue-400 border-t-2 border-blue-600'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
           >
             <Home size={24} className="mx-auto mb-1" />
@@ -643,8 +644,8 @@ function App() {
             }}
             className={`flex-1 py-4 text-center font-bold transition ${
               currentPage === 'cars'
-                ? 'text-blue-600 border-t-2 border-blue-600'
-                : 'text-gray-600'
+                ? 'text-blue-600 dark:text-blue-400 border-t-2 border-blue-600'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
           >
             <Car size={24} className="mx-auto mb-1" />
@@ -654,8 +655,8 @@ function App() {
             onClick={() => setCurrentPage('settings')}
             className={`flex-1 py-4 text-center font-bold transition ${
               currentPage === 'settings'
-                ? 'text-blue-600 border-t-2 border-blue-600'
-                : 'text-gray-600'
+                ? 'text-blue-600 dark:text-blue-400 border-t-2 border-blue-600'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
           >
             <SettingsIcon size={24} className="mx-auto mb-1" />

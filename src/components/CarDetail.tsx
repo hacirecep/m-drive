@@ -47,10 +47,10 @@ export const CarDetail: React.FC<CarDetailProps> = ({
   if (!car) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <p className="text-gray-600 mb-4">Araç bilgileri yükleniyor...</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">Araç bilgileri yükleniyor...</p>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+          className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition"
         >
           Geri Dön
         </button>
@@ -84,21 +84,20 @@ export const CarDetail: React.FC<CarDetailProps> = ({
         <p className="text-blue-100 text-lg mb-4">{car.marka} {car.model} {car.yil && `(${car.yil})`}</p>
 
         {car.sasi && (
-          <div className="bg-white/20 rounded-lg p-3 mb-4">
-            <p className="text-xs text-blue-100 mb-1">Şasi Numarası</p>
-            <p className="font-mono font-bold text-lg">{car.sasi}</p>
+          <div className="bg-white/20 dark:bg-gray-700/50 rounded-lg p-3 mb-4">
+            <p className="text-xs text-blue-100 dark:text-blue-200 mb-1">Şasi Numarası</p>
+            <p className="font-mono font-bold text-lg text-white">{car.sasi}</p>
           </div>
         )}
 
         <select
           value={car.durum}
           onChange={(e) => onStatusChange(e.target.value as any)}
-          className="w-full px-3 py-2 bg-white/20 text-white rounded-lg focus:outline-none border border-white/30 cursor-pointer"
-          style={{ colorScheme: 'light' }}
+          className="w-full px-3 py-2 bg-white/20 dark:bg-gray-700/50 text-white rounded-lg focus:outline-none border border-white/30 dark:border-gray-600 cursor-pointer"
         >
-          <option value="green" className="bg-white text-gray-900">Aktif</option>
-          <option value="yellow" className="bg-white text-gray-900">Servis</option>
-          <option value="red" className="bg-white text-gray-900">Arıza</option>
+          <option value="green" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Aktif</option>
+          <option value="yellow" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Servis</option>
+          <option value="red" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Arıza</option>
         </select>
       </div>
 
@@ -109,11 +108,11 @@ export const CarDetail: React.FC<CarDetailProps> = ({
 
         {/* Uyarılar - tıklanabilir stat kutusu */}
         <div
-          className="bg-white rounded-xl p-4 border border-gray-100 cursor-pointer hover:shadow-md transition"
+          className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-blue-900/30 transition"
           onClick={onOpenAlerts}
         >
-          <p className="text-xs text-gray-600 mb-1">{t('alerts', lang)}</p>
-          <p className="font-bold text-gray-900 flex items-center gap-1">
+          <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">{t('alerts', lang)}</p>
+          <p className="font-bold text-gray-900 dark:text-white flex items-center gap-1">
             {(car.alerts || []).length}
             {(car.alerts || []).length > 0 && (
               <Bell size={13} className="text-yellow-500" />
@@ -128,13 +127,13 @@ export const CarDetail: React.FC<CarDetailProps> = ({
       <div className="grid grid-cols-2 gap-2">
         <button
           onClick={onUpdateKM}
-          className="bg-orange-50 text-orange-700 p-3 rounded-xl font-bold hover:bg-orange-100 transition border border-orange-200 text-sm"
+          className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 p-3 rounded-xl font-bold hover:bg-orange-100 dark:hover:bg-orange-900/50 transition border border-orange-200 dark:border-orange-800 text-sm"
         >
           ⬆️ {t('updateKm', lang)}
         </button>
         <button
           onClick={onAddMaintenance}
-          className="bg-green-50 text-green-700 p-3 rounded-xl font-bold hover:bg-green-100 transition border border-green-200 text-sm"
+          className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 p-3 rounded-xl font-bold hover:bg-green-100 dark:hover:bg-green-900/50 transition border border-green-200 dark:border-green-800 text-sm"
         >
           🔧 {t('addMaintenance', lang)}
         </button>
@@ -142,11 +141,11 @@ export const CarDetail: React.FC<CarDetailProps> = ({
 
       {/* Maintenance History */}
       <div>
-        <h3 className="text-lg font-bold text-gray-900 mb-4">{t('maintenanceHistory', lang)}</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{t('maintenanceHistory', lang)}</h3>
         {(car.bakimlar || []).length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
-            <TrendingDown className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-gray-600">{t('noRecords', lang)}</p>
+          <div className="text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
+            <TrendingDown className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-2" />
+            <p className="text-gray-600 dark:text-gray-400">{t('noRecords', lang)}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -176,11 +175,11 @@ interface StatBoxProps {
 }
 
 const StatBox: React.FC<StatBoxProps> = ({ label, value, subtext }) => (
-  <div className="bg-white rounded-xl p-4 border border-gray-100">
-    <p className="text-xs text-gray-600 mb-1">{label}</p>
-    <p className="font-bold text-gray-900">
+  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
+    <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">{label}</p>
+    <p className="font-bold text-gray-900 dark:text-white">
       {value}
-      {subtext && <span className="text-xs text-gray-500 ml-1">{subtext}</span>}
+      {subtext && <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">{subtext}</span>}
     </p>
   </div>
 );
@@ -195,31 +194,31 @@ interface AlertCardProps {
 const AlertCard: React.FC<AlertCardProps> = ({ alert, language, onEdit, onDelete }) => {
   const lang = language as any;
   return (
-    <div className="bg-yellow-50 border border-yellow-200 border-l-4 border-l-yellow-400 rounded-lg p-3">
+    <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 border-l-4 border-l-yellow-400 rounded-lg p-3">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-900 text-sm">{alert.baslik}</p>
+          <p className="font-bold text-gray-900 dark:text-white text-sm">{alert.baslik}</p>
           {alert.tip === 'tarih' && alert.bitiseTarihi && (
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               📅 {new Date(alert.bitiseTarihi).toLocaleDateString('tr-TR')}
               {alert.oncesindanGun && ` · ${alert.oncesindanGun} gün öncesinde uyar`}
             </p>
           )}
           {alert.tip === 'km' && alert.bitisKm && (
-            <p className="text-xs text-gray-600 mt-1">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               🛣️ {alert.bitisKm.toLocaleString('tr-TR')} KM
               {alert.oncesindanKm && ` · ${alert.oncesindanKm.toLocaleString('tr-TR')} KM öncesinde uyar`}
             </p>
           )}
           {alert.not && (
-            <p className="text-xs text-gray-500 mt-1 italic">"{alert.not}"</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">"{alert.not}"</p>
           )}
         </div>
         <div className="flex gap-2 ml-2">
-          <button onClick={onEdit} className="text-blue-500 hover:text-blue-700 transition p-1">
+          <button onClick={onEdit} className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition p-1">
             <Pencil size={14} />
           </button>
-          <button onClick={onDelete} className="text-red-500 hover:text-red-700 transition p-1">
+          <button onClick={onDelete} className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition p-1">
             <Trash2 size={14} />
           </button>
         </div>
@@ -241,28 +240,28 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({ maintenance, currency
   return (
     <div
       onClick={onEdit}
-      className="bg-white border border-l-4 border-l-blue-600 rounded-lg p-4 hover:shadow-md transition cursor-pointer active:scale-95"
+      className="bg-white dark:bg-gray-800 border border-l-4 border-l-blue-600 dark:border-gray-700 rounded-lg p-4 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-blue-900/30 transition cursor-pointer active:scale-95"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h4 className="font-bold text-gray-900">{maintenance.islem}</h4>
-          <p className="text-xs text-gray-600 mt-1">
+          <h4 className="font-bold text-gray-900 dark:text-white">{maintenance.islem}</h4>
+          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
             {formatDate(maintenance.tarih)} • {maintenance.km.toLocaleString('tr-TR')} KM
           </p>
           {maintenance.not && (
-            <p className="text-sm text-gray-700 mt-2 italic">"{maintenance.not}"</p>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 italic">"{maintenance.not}"</p>
           )}
           {maintenance.sonraki && (
-            <p className="text-xs text-blue-600 mt-2 font-medium">
+            <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium">
               {t('nextMaintenanceKm', lang)}: {maintenance.sonraki.toLocaleString('tr-TR')} KM
             </p>
           )}
         </div>
         <div className="text-right ml-4">
-          <p className="font-bold text-gray-900">
+          <p className="font-bold text-gray-900 dark:text-white">
             {maintenance.maliyet} {currency}
           </p>
-          <p className="text-xs text-gray-400 mt-1">›</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">›</p>
         </div>
       </div>
     </div>

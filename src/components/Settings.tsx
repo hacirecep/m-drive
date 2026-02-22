@@ -175,7 +175,7 @@ export const Settings: React.FC<SettingsProps> = ({
           <p className="font-bold text-gray-900 dark:text-white">M-Drive Bulut Sistemi</p>
           <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">{t('appDescription', lang)}</p>
           <p className="text-xs text-gray-600 dark:text-gray-400 mt-3">{t('version', lang)} 2.0.0 (React)</p>
-          <p className="text-xs text-gray-600 dark:text-gray-400">{t('by', lang)} Haci Recep</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">{t('by', lang)}</p>
         </div>
       </div>
 

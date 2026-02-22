@@ -63,13 +63,13 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
     <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
         <input
           type="text"
           placeholder={t('searchPlaceholder', lang)}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white"
+          className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
         />
       </div>
 
@@ -80,7 +80,7 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
           className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition ${
             statusFilter === 'all'
               ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
           }`}
         >
           {t('allCars', lang)}
@@ -89,8 +89,8 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
           onClick={() => setStatusFilter('green')}
           className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition flex items-center gap-2 ${
             statusFilter === 'green'
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
+              : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
           }`}
         >
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>{t('active', lang)}
@@ -99,8 +99,8 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
           onClick={() => setStatusFilter('yellow')}
           className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition flex items-center gap-2 ${
             statusFilter === 'yellow'
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
+              : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
           }`}
         >
           <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>{t('service', lang)}
@@ -109,8 +109,8 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
           onClick={() => setStatusFilter('red')}
           className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition flex items-center gap-2 ${
             statusFilter === 'red'
-              ? 'bg-red-100 text-red-800'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
+              : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
           }`}
         >
           <div className="w-2 h-2 bg-red-500 rounded-full"></div>{t('broken', lang)}
@@ -119,11 +119,11 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
 
       {/* Sort Options */}
       <div className="flex gap-2">
-        <Filter size={20} className="text-gray-600" />
+        <Filter size={20} className="text-gray-600 dark:text-gray-400" />
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as any)}
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
         >
           <option value="plaka">{t('sortByPlate', lang)}</option>
           <option value="km">{t('sortByKm', lang)}</option>
@@ -134,10 +134,10 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
 
       {/* Car List */}
       {displayCars.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+        <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
           <div className="text-4xl mb-4">🚗</div>
-          <p className="text-gray-600 font-medium mb-2">{t('noCars', lang)}</p>
-          <p className="text-gray-500 text-sm mb-4">{t('noCarDescription', lang)}</p>
+          <p className="text-gray-600 dark:text-gray-300 font-medium mb-2">{t('noCars', lang)}</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{t('noCarDescription', lang)}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -151,24 +151,24 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, car.id)}
               onClick={() => onSelectCar(car.id)}
-              className={`bg-white rounded-xl p-4 border border-gray-100 cursor-move hover:shadow-md transition transform hover:scale-102 ${
+              className={`bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700 cursor-move hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-blue-900/30 transition transform hover:scale-102 ${
                 draggingId === car.id ? 'opacity-50' : ''
               }`}
             >
               <div className="flex items-center gap-3">
-                <GripVertical size={16} className="text-gray-400" />
+                <GripVertical size={16} className="text-gray-400 dark:text-gray-500" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getDurmBadgeColor(car.durum)}`}></div>
-                    <h4 className="font-bold text-gray-900">{car.plaka}</h4>
+                    <h4 className="font-bold text-gray-900 dark:text-white">{car.plaka}</h4>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {car.marka} {car.model} {car.yil && `(${car.yil})`}
                   </p>
                 </div>
                 <div className="text-right whitespace-nowrap">
-                  <p className="font-bold text-gray-900">{car.km.toLocaleString('tr-TR')}</p>
-                  <p className="text-xs text-gray-600">KM</p>
+                  <p className="font-bold text-gray-900 dark:text-white">{car.km.toLocaleString('tr-TR')}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">KM</p>
                 </div>
               </div>
             </div>
@@ -179,7 +179,7 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
       {/* Floating Add Button */}
       <button
         onClick={onAddCar}
-        className="fixed bottom-24 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 z-50"
+        className="fixed bottom-24 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-full shadow-lg dark:shadow-blue-900/50 flex items-center justify-center transition-transform hover:scale-110 z-50"
         title={t('addNewCar', lang)}
       >
         <Plus size={28} />
