@@ -107,7 +107,7 @@ export const CarModal: React.FC<CarModalProps> = ({ isOpen, onClose, car, langua
             type="text"
             placeholder={t('brand', lang)}
             value={formData.marka}
-            onChange={(e) => setFormData({ ...formData, marka: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, marka: e.target.value.toUpperCase() })}
             required
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
@@ -115,7 +115,7 @@ export const CarModal: React.FC<CarModalProps> = ({ isOpen, onClose, car, langua
             type="text"
             placeholder={t('model', lang)}
             value={formData.model}
-            onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, model: e.target.value.toUpperCase() })}
             required
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
@@ -140,7 +140,7 @@ export const CarModal: React.FC<CarModalProps> = ({ isOpen, onClose, car, langua
             type="text"
             placeholder={t('chassis', lang)}
             value={formData.sasi}
-            onChange={(e) => setFormData({ ...formData, sasi: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, sasi: e.target.value.toUpperCase() })}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
 
