@@ -67,14 +67,24 @@ function App() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
     const updateTheme = () => {
       const actualTheme = theme === 'auto' ? (mediaQuery.matches ? 'dark' : 'light') : theme;
       document.documentElement.classList.toggle('dark', actualTheme === 'dark');
     };
 
+    // İlk çalışma
     updateTheme();
-    mediaQuery.addEventListener('change', updateTheme);
-    return () => mediaQuery.removeEventListener('change', updateTheme);
+    
+    // Event listener
+    const handler = (e: MediaQueryListEvent) => {
+      if (theme === 'auto') {
+        document.documentElement.classList.toggle('dark', e.matches);
+      }
+    };
+    
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
   }, [theme]);
 
   const lang = language as any;
