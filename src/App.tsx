@@ -88,6 +88,8 @@ function App() {
   }, [theme]);
 
   // Browser/Android back button support
+  const lastBackPressRef = React.useRef<number>(0);
+
   useEffect(() => {
     const handlePopState = () => {
       // Close any open modal first
@@ -111,8 +113,16 @@ function App() {
       } else if (currentPage === 'cars' || currentPage === 'settings') {
         setCurrentPage('home');
       } else {
-        // On home page, push state to prevent app from closing
+        // On home page: double back press to exit
+        const now = Date.now();
+        if (now - lastBackPressRef.current < 2000) {
+          // Second press within 2 seconds — let the app close
+          return;
+        }
+        lastBackPressRef.current = now;
         window.history.pushState({ page: 'home' }, '');
+        setShowToast({ message: 'Çıkmak için tekrar geri basın', type: 'error' });
+        setTimeout(() => setShowToast(null), 2000);
       }
     };
 
