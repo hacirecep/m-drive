@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Settings as SettingsIcon, Car, ChevronLeft, Edit } from 'lucide-react';
+import { App as CapApp } from '@capacitor/app';
 import { useAuth } from './hooks/useAuth';
 import { useCars } from './hooks/useCars';
 import { Auth } from './components/Auth';
@@ -91,7 +92,7 @@ function App() {
   const lastBackPressRef = React.useRef<number>(0);
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handleBack = () => {
       // Close any open modal first
       const openModalKey = Object.keys(openModals).find(
         (key) => openModals[key as ModalType]
@@ -99,8 +100,6 @@ function App() {
 
       if (openModalKey) {
         closeModal(openModalKey);
-        // Push state again so next back press works
-        window.history.pushState({ page: currentPage }, '');
         return;
       }
 
@@ -116,21 +115,30 @@ function App() {
         // On home page: double back press to exit
         const now = Date.now();
         if (now - lastBackPressRef.current < 2000) {
-          // Second press within 2 seconds — let the app close
+          CapApp.exitApp();
           return;
         }
         lastBackPressRef.current = now;
-        window.history.pushState({ page: 'home' }, '');
         setShowToast({ message: 'Çıkmak için tekrar geri basın', type: 'error' });
         setTimeout(() => setShowToast(null), 2000);
       }
     };
 
-    // Initialize history state
-    window.history.replaceState({ page: currentPage }, '');
+    // Capacitor Android back button
+    const backButtonListener = CapApp.addListener('backButton', handleBack);
 
+    // Browser popstate fallback
+    const handlePopState = () => {
+      handleBack();
+      window.history.pushState({ page: currentPage }, '');
+    };
+    window.history.replaceState({ page: currentPage }, '');
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+
+    return () => {
+      backButtonListener.then(l => l.remove());
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, [currentPage, openModals]);
 
   // Push history state on page navigation
