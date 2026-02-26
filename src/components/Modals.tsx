@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { Car, Maintenance } from '../types';
 import { t } from '../lib/i18n';
 
@@ -77,15 +77,24 @@ export const CarModal: React.FC<CarModalProps> = ({ isOpen, onClose, car, langua
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-end z-50">
-      <div className="w-full bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
+      <div className="w-full max-w-[840px] bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {car ? t('editCar', lang) : t('carInfo', lang)}
+            {car ? t('editCar', lang) : t('addNewCar', lang)}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-            <X size={24} className="text-gray-900 dark:text-gray-300" />
-          </button>
+          {car && onDelete && (
+            <button
+              type="button"
+              onClick={() => {
+                onDelete();
+                onClose();
+              }}
+              className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition"
+            >
+              <Trash2 size={22} />
+            </button>
+          )}
         </div>
 
         {error && (
@@ -146,25 +155,19 @@ export const CarModal: React.FC<CarModalProps> = ({ isOpen, onClose, car, langua
 
           <div className="flex gap-3">
             <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            >
+              {t('cancel', lang)}
+            </button>
+            <button
               type="submit"
               disabled={loading}
               className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50"
             >
               {loading ? t('saving', lang) : car ? t('update', lang) : t('add', lang)}
             </button>
-            {car && onDelete && (
-              <button
-                type="button"
-                onClick={() => {
-                  onDelete();
-                  onClose();
-                }}
-                disabled={loading}
-                className="px-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition disabled:opacity-50"
-              >
-                <Trash2 size={20} />
-              </button>
-            )}
           </div>
         </form>
       </div>
@@ -234,15 +237,21 @@ export const MaintenanceModal: React.FC<MaintenanceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-end z-50">
-      <div className="w-full bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
+      <div className="w-full max-w-[840px] bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             {maintenance ? t('maintenanceDetail', lang) : t('addMaintenance', lang)}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-            <X size={24} className="text-gray-900 dark:text-gray-300" />
-          </button>
+          {maintenance && onDelete && (
+            <button
+              type="button"
+              onClick={onDelete}
+              className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition"
+            >
+              <Trash2 size={22} />
+            </button>
+          )}
         </div>
 
         {error && (
@@ -291,22 +300,22 @@ export const MaintenanceModal: React.FC<MaintenanceModalProps> = ({
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none h-20 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50"
-          >
-            {loading ? t('saving', lang) : maintenance ? t('update', lang) : t('add', lang)}
-          </button>
-          {maintenance && onDelete && (
+          <div className="flex gap-3">
             <button
               type="button"
-              onClick={onDelete}
-              className="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 transition"
+              onClick={onClose}
+              className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
             >
-              🗑️ {t('deleteMaintenance', lang)}
+              {t('cancel', lang)}
             </button>
-          )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50"
+            >
+              {loading ? t('saving', lang) : maintenance ? t('update', lang) : t('add', lang)}
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -349,8 +358,8 @@ export const UpdateKMModal: React.FC<UpdateKMModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-[840px]">
         <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{t('updateKm', lang)}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -432,8 +441,8 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-[840px]">
         <div className="text-center">
           <div className="text-5xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">{title}</h2>
@@ -487,7 +496,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
     not: '',
     tip: 'tarih' as 'tarih' | 'km',
     bitiseTarihi: new Date().toISOString().split('T')[0],
-    oncesindanGun: 7,
+    oncesindanGun: '7',
     bitisKm: '',
     oncesindanKm: '',
   });
@@ -499,7 +508,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
         not: editingAlert.not || '',
         tip: editingAlert.tip || 'tarih',
         bitiseTarihi: editingAlert.bitiseTarihi || new Date().toISOString().split('T')[0],
-        oncesindanGun: editingAlert.oncesindanGun || 7,
+        oncesindanGun: editingAlert.oncesindanGun?.toString() || '7',
         bitisKm: editingAlert.bitisKm?.toString() || '',
         oncesindanKm: editingAlert.oncesindanKm?.toString() || '',
       });
@@ -509,7 +518,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
         not: '',
         tip: 'tarih',
         bitiseTarihi: new Date().toISOString().split('T')[0],
-        oncesindanGun: 7,
+        oncesindanGun: '7',
         bitisKm: '',
         oncesindanKm: '',
       });
@@ -532,7 +541,8 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
         setError(t('alertNoEndDate', lang));
         return;
       }
-      if (!formData.oncesindanGun || formData.oncesindanGun <= 0) {
+      const gunVal = parseInt(formData.oncesindanGun) || 0;
+      if (!gunVal || gunVal <= 0) {
         setError(t('alertDaysBeforeError', lang));
         return;
       }
@@ -559,7 +569,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
         not: formData.not,
         tip: formData.tip,
         bitiseTarihi: formData.tip === 'tarih' ? formData.bitiseTarihi : undefined,
-        oncesindanGun: formData.tip === 'tarih' ? formData.oncesindanGun : undefined,
+        oncesindanGun: formData.tip === 'tarih' ? parseInt(formData.oncesindanGun) : undefined,
         bitisKm: formData.tip === 'km' ? parseInt(formData.bitisKm as any) : undefined,
         oncesindanKm: formData.tip === 'km' ? parseInt(formData.oncesindanKm as any) : undefined,
       };
@@ -570,7 +580,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
         not: '',
         tip: 'tarih',
         bitiseTarihi: new Date().toISOString().split('T')[0],
-        oncesindanGun: 7,
+        oncesindanGun: '7',
         bitisKm: '',
         oncesindanKm: '',
       });
@@ -584,13 +594,20 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-end z-50">
-      <div className="w-full bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
+      <div className="w-full max-w-[840px] bg-white dark:bg-gray-800 rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{editingAlert ? t('editAlert', lang) : t('addAlert', lang)}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-            <X size={24} className="text-gray-900 dark:text-gray-300" />
-          </button>
+          {editingAlert && onDelete && (
+            <button
+              type="button"
+              onClick={onDelete}
+              disabled={loading}
+              className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition disabled:opacity-50"
+            >
+              <Trash2 size={22} />
+            </button>
+          )}
         </div>
 
         {error && (
@@ -627,7 +644,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
-              📅 {t('alertDateAlert', lang)}
+              {t('alertDateAlert', lang)}
             </button>
             <button
               type="button"
@@ -638,7 +655,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
-              🛣️ {t('alertKmAlert', lang)}
+              {t('alertKmAlert', lang)}
             </button>
           </div>
 
@@ -654,7 +671,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
                 type="number"
                 placeholder={t('alertDaysBefore', lang)}
                 value={formData.oncesindanGun}
-                onChange={(e) => setFormData({ ...formData, oncesindanGun: parseInt(e.target.value) || 7 })}
+                onChange={(e) => setFormData({ ...formData, oncesindanGun: e.target.value })}
                 min="1"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
@@ -680,23 +697,22 @@ export const AlertModal: React.FC<AlertModalProps> = ({ isOpen, onClose, carId, 
             </>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:opacity-50"
-          >
-            {loading ? t('saving', lang) : editingAlert ? t('update', lang) : t('add', lang)}
-          </button>
-          {editingAlert && onDelete && (
+          <div className="flex gap-3">
             <button
               type="button"
-              onClick={onDelete}
-              disabled={loading}
-              className="w-full bg-red-600 dark:bg-red-700 text-white py-3 rounded-lg font-bold hover:bg-red-700 dark:hover:bg-red-600 transition disabled:opacity-50"
+              onClick={onClose}
+              className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
             >
-              {t('delete', lang)}
+              {t('cancel', lang)}
             </button>
-          )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-blue-600 dark:bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:opacity-50"
+            >
+              {loading ? t('saving', lang) : editingAlert ? t('update', lang) : t('add', lang)}
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -72,17 +72,6 @@ export const formatDate = (dateString: string): string => {
   return date.toLocaleDateString('tr-TR');
 };
 
-export const getDurmColor = (durum: 'green' | 'yellow' | 'red'): string => {
-  switch (durum) {
-    case 'green':
-      return 'bg-green-100 text-green-800 border-green-300';
-    case 'yellow':
-      return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-    case 'red':
-      return 'bg-red-100 text-red-800 border-red-300';
-  }
-};
-
 export const getDurmBadgeColor = (durum: 'green' | 'yellow' | 'red'): string => {
   switch (durum) {
     case 'green':

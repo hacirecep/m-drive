@@ -14,7 +14,7 @@ import {
   DeleteConfirmModal,
   AlertModal,
 } from './components/Modals';
-import { calculateDashboardStats, formatCurrency } from './lib/utils';
+import { calculateDashboardStats } from './lib/utils';
 import { firebaseService } from './lib/firebase';
 import { getDefaultLanguage, t } from './lib/i18n';
 import { Car as CarType } from './types';
@@ -49,7 +49,7 @@ function App() {
   const [editingAlert, setEditingAlert] = useState<any>(null);
   const [deleteConfirmData, setDeleteConfirmData] = useState<{ type: 'car' | 'maintenance'; id?: string } | null>(null);
   const [showToast, setShowToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-// SErdarseer
+
   const selectedCar = selectedCarId ? cars.find((c) => c.id === selectedCarId) : null;
   const stats = calculateDashboardStats(cars);
 
@@ -153,7 +153,6 @@ function App() {
       closeModal('maintenance');
       setEditingMaintenanceIdx(null);
     } catch (err: any) {
-      console.error('Bakım ekleme hatası:', err);
       showToastMessage('maintenanceDeleteFailed', 'error');
     }
   };
@@ -320,10 +319,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
+    <div className="max-w-[840px] mx-auto min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 overflow-x-hidden">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 shadow-sm">
-        <div className="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             {(currentPage === 'detail' || currentPage === 'alerts') && (
               <button
@@ -356,7 +355,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <div className="max-w-md mx-auto px-4 py-6">
+      <div className="px-4 py-6">
         {carsLoading ? (
           <div className="text-center py-12 text-gray-900 dark:text-gray-300">⏳ {t('saving', lang).replace('...', '')}</div>
         ) : currentPage === 'home' ? (
@@ -451,13 +450,13 @@ function App() {
                         <p className="font-bold text-gray-900 dark:text-white">{alert.baslik}</p>
                         {alert.tip === 'tarih' && alert.bitiseTarihi && (
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            📅 {new Date(alert.bitiseTarihi).toLocaleDateString('tr-TR')}
+                            {new Date(alert.bitiseTarihi).toLocaleDateString('tr-TR')}
                             {alert.oncesindanGun && ` · ${alert.oncesindanGun} gün öncesinde uyar`}
                           </p>
                         )}
                         {alert.tip === 'km' && alert.bitisKm && (
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            🛣️ {alert.bitisKm.toLocaleString('tr-TR')} KM
+                            {alert.bitisKm.toLocaleString('tr-TR')} KM
                             {alert.oncesindanKm && ` · ${alert.oncesindanKm.toLocaleString('tr-TR')} KM öncesinde uyar`}
                           </p>
                         )}
@@ -471,7 +470,8 @@ function App() {
               {/* FAB - Uyarı Ekle */}
               <button
                 onClick={() => { setEditingAlert(null); openModal('alert'); }}
-                className="fixed bottom-24 right-6 w-14 h-14 bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-500 text-white rounded-full shadow-lg dark:shadow-yellow-900/50 flex items-center justify-center text-2xl transition z-30"
+                className="fixed bottom-24 w-14 h-14 bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-500 text-white rounded-full shadow-lg dark:shadow-yellow-900/50 flex items-center justify-center text-2xl transition z-30"
+                style={{ right: 'max(1.5rem, calc((100vw - 840px) / 2 + 1.5rem))' }}
                 title={t('addAlert', lang)}
               >
                 +
@@ -631,8 +631,8 @@ function App() {
       )}
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 shadow-lg dark:shadow-2xl">
-        <div className="max-w-md mx-auto px-4 flex items-center justify-around">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[840px] bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 shadow-lg dark:shadow-2xl">
+        <div className="px-4 flex items-center justify-around">
           <button
             onClick={() => {
               setCurrentPage('home');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TrendingDown, Bell, Pencil, Trash2, ChevronLeft, Edit } from 'lucide-react';
 import { Car, Maintenance, Alert } from '../types';
 import { formatDate } from '../lib/utils';
@@ -183,49 +183,6 @@ const StatBox: React.FC<StatBoxProps> = ({ label, value, subtext }) => (
     </p>
   </div>
 );
-
-interface AlertCardProps {
-  alert: Alert;
-  language: string;
-  onEdit: () => void;
-  onDelete: () => void;
-}
-
-const AlertCard: React.FC<AlertCardProps> = ({ alert, language, onEdit, onDelete }) => {
-  const lang = language as any;
-  return (
-    <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 border-l-4 border-l-yellow-400 rounded-lg p-3">
-      <div className="flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-900 dark:text-white text-sm">{alert.baslik}</p>
-          {alert.tip === 'tarih' && alert.bitiseTarihi && (
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              📅 {new Date(alert.bitiseTarihi).toLocaleDateString('tr-TR')}
-              {alert.oncesindanGun && ` · ${alert.oncesindanGun} gün öncesinde uyar`}
-            </p>
-          )}
-          {alert.tip === 'km' && alert.bitisKm && (
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              🛣️ {alert.bitisKm.toLocaleString('tr-TR')} KM
-              {alert.oncesindanKm && ` · ${alert.oncesindanKm.toLocaleString('tr-TR')} KM öncesinde uyar`}
-            </p>
-          )}
-          {alert.not && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">"{alert.not}"</p>
-          )}
-        </div>
-        <div className="flex gap-2 ml-2">
-          <button onClick={onEdit} className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition p-1">
-            <Pencil size={14} />
-          </button>
-          <button onClick={onDelete} className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition p-1">
-            <Trash2 size={14} />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 interface MaintenanceCardProps {
   maintenance: Maintenance;

@@ -179,7 +179,8 @@ export const CarList: React.FC<CarListProps> = ({ cars, language, onSelectCar, o
       {/* Floating Add Button */}
       <button
         onClick={onAddCar}
-        className="fixed bottom-24 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-full shadow-lg dark:shadow-blue-900/50 flex items-center justify-center transition-transform hover:scale-110 z-50"
+        className="fixed bottom-24 w-14 h-14 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-full shadow-lg dark:shadow-blue-900/50 flex items-center justify-center transition-transform hover:scale-110 z-50"
+        style={{ right: 'max(1.5rem, calc((100vw - 840px) / 2 + 1.5rem))' }}
         title={t('addNewCar', lang)}
       >
         <Plus size={28} />
