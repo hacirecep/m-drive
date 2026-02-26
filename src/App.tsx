@@ -87,6 +87,47 @@ function App() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, [theme]);
 
+  // Browser/Android back button support
+  useEffect(() => {
+    const handlePopState = () => {
+      // Close any open modal first
+      const openModalKey = Object.keys(openModals).find(
+        (key) => openModals[key as ModalType]
+      ) as ModalType | undefined;
+
+      if (openModalKey) {
+        closeModal(openModalKey);
+        // Push state again so next back press works
+        window.history.pushState({ page: currentPage }, '');
+        return;
+      }
+
+      // Navigate back through pages
+      if (currentPage === 'alerts') {
+        setCurrentPage('detail');
+      } else if (currentPage === 'detail') {
+        setCurrentPage('cars');
+        setSelectedCarId(null);
+      } else if (currentPage === 'cars' || currentPage === 'settings') {
+        setCurrentPage('home');
+      } else {
+        // On home page, push state to prevent app from closing
+        window.history.pushState({ page: 'home' }, '');
+      }
+    };
+
+    // Initialize history state
+    window.history.replaceState({ page: currentPage }, '');
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [currentPage, openModals]);
+
+  // Push history state on page navigation
+  useEffect(() => {
+    window.history.pushState({ page: currentPage }, '');
+  }, [currentPage]);
+
   const lang = language as any;
 
   const showToastMessage = (messageKey: string, type: 'success' | 'error' = 'success') => {
